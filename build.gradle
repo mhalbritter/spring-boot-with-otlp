@@ -1,0 +1,32 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.4.0-M2'
+    id 'io.spring.dependency-management' version '1.1.6'
+}
+
+group = 'com.example'
+version = '0.0.1-SNAPSHOT'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
+
+repositories {
+    mavenCentral()
+    maven { url 'https://repo.spring.io/milestone' }
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    // Switch from Brave to OpenTelemetry tracer, as it knows how to speak OTLP
+    implementation 'io.micrometer:micrometer-tracing-bridge-otel'
+    // Export traces in OTLP format
+    implementation 'io.opentelemetry:opentelemetry-exporter-otlp'
+    // Export logs in OTLP format
+    implementation 'io.opentelemetry.instrumentation:opentelemetry-logback-appender-1.0:2.7.0-alpha'
+    // Export metrics in OTLP format
+    runtimeOnly 'io.micrometer:micrometer-registry-otlp'
+}

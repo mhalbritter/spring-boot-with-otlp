@@ -1,0 +1,9 @@
+name: 'otlp-collector'
+services:
+  otel-collector:
+    image: otel/opentelemetry-collector-contrib
+    volumes:
+      - ./otel-collector-config.yaml:/etc/otelcol-contrib/config.yaml
+      - ./file-exporter:/file-exporter
+    ports:
+      - '4318:4318'
